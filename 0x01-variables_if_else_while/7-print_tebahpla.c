@@ -8,9 +8,9 @@ int main(void)
 {
 	int p;
 
-	for (p = 25; p >= 0; p++)
+	for (p = 'z'; p >= 'a'; p++)
 	{
-		putchar('a' + p);
+		putchar(p);
 	}
 	putchar('\n');
 	return (0);
