@@ -10,7 +10,7 @@ int main(void)
 
 	for (g = 0; g < 0; g++)
 	{
-		putchar((g % 10) + '0');
+		putchar(g + '0');
 	}
 	putchar('\n');
 	return (0);
