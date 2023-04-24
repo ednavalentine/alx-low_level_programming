@@ -3,9 +3,8 @@
 #include <time.h>
 /**
  * main - Entry point
- *
- * Description - to know whether int n is postive, neagtive or equal to zero
- *
+ * Description: Know whether int n is postive, negative or equal to zero,
+ * the main function returns an integer value
  * Return - Always 0 (Success)
  */
 int main(void)
@@ -14,15 +13,16 @@ int main(void)
 
 	srand(time(0));
 	n = rand() - RAND_MAX / 2;
+	/* your code goes there */
 	if (n > 0)
-		printf("is postive\n");
+		printf("n is postive\n");
 	else if (n == 0)
 	{
-		printf("is zero\n");
+		printf("n is zero\n");
 	}
 	else
 	{
-		printf("is negative\n");
+		printf("n is negative\n");
 	}
 	return (0);
 }
