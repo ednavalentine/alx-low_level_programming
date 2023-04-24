@@ -3,9 +3,9 @@
 #include <time.h>
 /**
  * main - Entry point
- * Description: Know whether int n is postive, negative or equal to zero,
- * the main function returns an integer value
+ * Description: 'prints out a postive negative or zero as answer'
  * Return - Always 0 (Success)
+ * betty coding style
  */
 int main(void)
 {
@@ -13,16 +13,15 @@ int main(void)
 
 	srand(time(0));
 	n = rand() - RAND_MAX / 2;
-	/* your code goes there */
 	if (n > 0)
-		printf("n is postive\n");
+		printf("%d is postive\n");
 	else if (n == 0)
 	{
-		printf("n is zero\n");
+		printf("%d is zero\n");
 	}
 	else
 	{
-		printf("n is negative\n");
+		printf("%d is negative\n");
 	}
 	return (0);
 }
