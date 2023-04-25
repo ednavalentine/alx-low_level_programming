@@ -7,15 +7,17 @@
 int main(void)
 {
 	int u;
-	char t;
 
-	for (u = 0; u < 10; u++)
+	for (u = 0; u < 16; u++)
 	{
-		putchar((u % 10) + '0');
-	}
-	for (t = 'a'; t < 'f'; t++)
-	{
-		putchar(t);
+		if (u < 10)
+		{
+			putchar('0' + u);
+		}
+		else
+		{
+			putchar(87 + u);
+		}
 	}
 	putchar('\n');
 	return (0);
