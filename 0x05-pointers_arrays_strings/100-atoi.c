@@ -13,7 +13,7 @@ int _atoi(char *s)
 
 	while (s[cu])
 	{
-	if (s[cu])
+	if (s[cu] == 45)
 	{
 		sign *= -1;
 	}
