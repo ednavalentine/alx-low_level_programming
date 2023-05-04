@@ -3,6 +3,7 @@
 /**
  * reverse - Reverses a string
  * @r: String to reverse
+ * Return: void
  */
 char *reverse(char *r)
 {
