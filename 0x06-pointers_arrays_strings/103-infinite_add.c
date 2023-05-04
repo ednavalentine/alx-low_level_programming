@@ -6,16 +6,16 @@
  */
 char *reverse(char *r)
 {
-        int i, j;
-        char tmp;
+	int i, j;
+	char tmp;
 
-        for (i = 0, j = strlen(r) - 1; i < j; i++, j--)
-        {
-                tmp = r[i];
-                r[i] = r[j];
-                r[j] = tmp;
-        }
-        return (r);
+	for (i = 0, j = strlen(r) - 1; i < j; i++, j--)
+	{
+		tmp = r[i];
+		r[i] = r[j];
+		r[j] = tmp;
+	}
+	return (r);
 }
 
 /**
