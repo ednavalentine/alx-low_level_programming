@@ -16,7 +16,7 @@ int main(int argc, char *argv[])
 		printf("Error\n");
 		return (1);
 	}
-	
+
 	numb1 = atoi(argv[1]);
 	numb2 = atoi(argv[2]);
 	results = numb1 * numb2;
