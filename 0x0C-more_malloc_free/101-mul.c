@@ -1,104 +1,92 @@
 #include "main.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <ctype.h>
+#define ERR_MSG "Error"
 /**
- * multiply - passed in base 10
- * @numb1: parameter to used
- * @numb2: parameter to used
+ * is_digit - checks if a string contains a non-digit char
+ * @s: parameter to used
  * Return: void
  */
-int multiply(int num1, int num2)
+int is_digit(char *s)
 {
-	return (num1 * num2);
+	int ink = 0;
+
+	while (s[ink] != '\0')
+	{
+		ink++;
+	}
+	return (ink);
 }
 /**
- * isNumber - to check if its a number
- * @str: parameter to be used
+ * _strlen - to check length of a string
+ * @s: parameter to be used
  * Return: void
  */
-int isNumber(const char* str)
+int _strlen(char *s)
 {
-	if (*str == '-' || *str == '+')
-		str++;
-	while (*str)
+	int ink = 0;
+
+	while (s[ink] != '\0')
 	{
-		if (!isdigit(*str))
-		{
-			return (0);
-		}
-		str++;
+		ink++;
 	}
-	return (1);
+	return (ink);
 }
 /**
- * printNumber - prints number
- * @number: no to be printed
+ * error - print an error
  * Return: void
  */
-void printNumber(int number)
+void error(void)
 {
-	int reversedNumber = 0;
-	int tempNumber = number;
-
-	if (number == 0)
-	{
-		_putchar('0');
-		return;
-	}
-	if (number < 0)
-	{
-		_putchar('-');
-		number = -number;
-	}
-
-	while (tempNumber != 0)
-	{
-		reversedNumber = reversedNumber * 10 + (tempNumber % 10);
-		tempNumber /= 10;
-	}
-	while (reversedNumber != 0)
-	{
-		_putchar((reversedNumber % 10) + '0');
-		reversedNumber /= 10;
-	}
-}
-/**
- * printError - print an error
- * Return: void
- */
-void printError()
-{
-	const char* error = "Error\n";
-
-	while (*error)
-	{
-		_putchar(*error);
-		error++;
-	}
+	printf("Error\n");
+	exit(98);
 }
 /**
  * main - print 2 positive numbers
  * @argc: argument count
- * @argcv: argument vector
+ * @argv: argument vector
  * Return: void
  */
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
-	int num1;
-	int num2;
-	int result;
-	
-	if ((argc != 3 || !isNumber(argv[1]) || !isNumber(argv[2])))
+	char *s1, *s2;
+	int leng, leng1, leng2, ink, cat, line1, line2, *results, ant = 0;
+
+	s1 = argv[1], s2 = argv[2];
+	if (argc != 3 || !is_digit(s1) || !is_digit(s2))
+		error();
+	leng1 =  _strlen(s1);
+	leng2 =  _strlen(s2);
+	leng = leng1 + leng2 + 1;
+	results = malloc(sizeof(int) * leng);
+	if (!results)
+		return (1);
+	for (ink = 0; ink <= leng1 + leng2; ink++)
+		results[ink] = 0;
+	for (leng1 = leng1 - 1; leng1 >= 0; leng1--)
 	{
-		printError();
-		return (98);
+		line1 = s1[leng1] - 0;
+		cat = 0;
+		for (leng2 = _strlen(s2) - 1; leng2 >= 0; leng2--)
+		{
+			line2 = s2[leng2] - '0';
+			cat += results[leng1 + leng2 + 1] + (line1 * line2);
+			results[leng1 + leng2 + 1] = cat % 10;
+			cat /= 10;
+		}
+		if (cat > 0)
+			results[leng1 + leng2 + 1] += cat;
 	}
-	num1 = atoi(argv[1]);
-	num2 = atoi(argv[2]);
-	
-	result = multiply(num1, num2);
-	printNumber(result);
-	_putchar('\n');
-	return (0);
+		for (ink = 0; ink < leng - 1; ink++)
+		{
+			if (results[ink])
+				ant = 1;
+			if (ant)
+				_putchar(results[ink] + '0');
+		}
+		if (!ant)
+			_putchar('0');
+		_putchar('\n');
+		free(results);
+		return (0);
 }
