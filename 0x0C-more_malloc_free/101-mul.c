@@ -38,11 +38,8 @@ int isNumber(const char* str)
  */
 void printNumber(int number)
 {
-	int digits = 0;
-	int temp = number;
-	char* output;
-	char* ptr;
-	int i;
+	int reversedNumber = 0;
+	int tempNumber = number;
 
 	if (number == 0)
 	{
@@ -54,29 +51,31 @@ void printNumber(int number)
 		_putchar('-');
 		number = -number;
 	}
-	while (temp > 0)
+
+	while (tempNumber != 0)
 	{
-		temp /= 10;
-		digits++;
+		reversedNumber = reversedNumber * 10 + (tempNumber % 10);
+		tempNumber /= 10;
 	}
-	output = (char *)malloc(digits + 1);
-	if (output == NULL)
+	while (reversedNumber != 0)
 	{
-		exit(1);
+		_putchar((reversedNumber % 10) + '0');
+		reversedNumber /= 10;
 	}
-	for (i = digits - 1; i >= 0; i--)
+}
+/**
+ * printError - print an error
+ * Return: void
+ */
+void printError()
+{
+	const char* error = "Error\n";
+
+	while (*error)
 	{
-		output[i] = (number % 10) + '0';
-		number /= 10;
+		_putchar(*error);
+		error++;
 	}
-	output[digits] = '\0';
-	ptr = output;
-	while (*ptr)
-	{
-		_putchar(*ptr);
-		ptr++;
-	}
-	free(output);
 }
 /**
  * main - print 2 positive numbers
@@ -90,30 +89,15 @@ int main(int argc, char* argv[])
 	int num2;
 	int result;
 	
-	if (argc != 3)
+	if ((argc != 3 || !isNumber(argv[1]) || !isNumber(argv[2])))
 	{
-		_putchar('E');
-		_putchar('r');
-		_putchar('r');
-		_putchar('o');
-		_putchar('r');
-		_putchar('\n');
-		return (98);
-	}
-	if (!isNumber(argv[1]) || !isNumber(argv[2]))
-	{
-		_putchar('E');
-		_putchar('r');
-		_putchar('r');
-		_putchar('o');
-		_putchar('r');
-		_putchar('\n');
+		printError();
 		return (98);
 	}
 	num1 = atoi(argv[1]);
 	num2 = atoi(argv[2]);
+	
 	result = multiply(num1, num2);
-
 	printNumber(result);
 	_putchar('\n');
 	return (0);
