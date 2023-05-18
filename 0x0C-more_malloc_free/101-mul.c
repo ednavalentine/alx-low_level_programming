@@ -44,12 +44,12 @@ void printNumber(int number)
 
 	if (number == 0)
 	{
-		putchar('0');
+		_putchar('0');
 		return;
 	}
 	if (number < 0)
 	{
-		putchar('-');
+		_putchar('-');
 		number = -number;
 	}
 	while (temp > 0)
@@ -71,7 +71,7 @@ void printNumber(int number)
 	ptr = output;
 	while (*ptr)
 	{
-		putchar(*ptr);
+		_putchar(*ptr);
 		ptr++;
 	}
 	free(output);
@@ -90,22 +90,22 @@ int main(int argc, char* argv[])
 	
 	if (argc != 3)
 	{
-		putchar('E');
-		putchar('r');
-		putchar('r');
-		putchar('o');
-		putchar('r');
-		putchar('\n');
+		_putchar('E');
+		_putchar('r');
+		_putchar('r');
+		_putchar('o');
+		_putchar('r');
+		_putchar('\n');
 		return (98);
 	}
 	if (!isNumber(argv[1]) || !isNumber(argv[2]))
 	{
-		putchar('E');
-		putchar('r');
-		putchar('r');
-		putchar('o');
-		putchar('r');
-		putchar('\n');
+		_putchar('E');
+		_putchar('r');
+		_putchar('r');
+		_putchar('o');
+		_putchar('r');
+		_putchar('\n');
 		return (98);
 	}
 	num1 = atoi(argv[1]);
@@ -113,6 +113,6 @@ int main(int argc, char* argv[])
 	result = multiply(num1, num2);
 
 	printNumber(result);
-	putchar('\n');
+	_putchar('\n');
 	return (0);
 }
