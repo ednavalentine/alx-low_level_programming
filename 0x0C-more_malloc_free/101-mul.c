@@ -19,6 +19,8 @@ int multiply(int num1, int num2)
  */
 int isNumber(const char* str)
 {
+	if (*str == '-' || *str == '+')
+		str++;
 	while (*str)
 	{
 		if (!isdigit(*str))
