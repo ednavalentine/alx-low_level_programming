@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 		return (1);
 	}
 	num_bytes = atoi(argv[1]);
-	if (num_bytes < 0)
+	if (num_bytes <= 0)
 	{
 		printf("Error\n");
 		return (2);
@@ -25,7 +25,7 @@ int main(int argc, char *argv[])
 	opcode_ptr = (unsigned char *)main;
 	for (ink = 0; ink < num_bytes; ink++)
 	{
-		printf("%02x ", opcode_ptr[ink]);
+		printf("%02hhx ", opcode_ptr[ink]);
 	}
 	printf("\n");
 	return (0);
