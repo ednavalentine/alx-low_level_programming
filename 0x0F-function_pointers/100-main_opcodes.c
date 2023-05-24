@@ -11,8 +11,6 @@ void print_opcodes(int num_bytes);
 int main(int argc, char *argv[])
 {
 	int i, num_bytes;
-	void *main_addr;
-	unsigned char *opcodes;
 
 	if (argc != 2)
 	{
@@ -25,8 +23,8 @@ int main(int argc, char *argv[])
 		printf("Error\n");
 		exit(2);
 	}
-	main_addr = (void *)main;
-	opcodes = (unsigned char *)main_addr;
+	void *main_addr = (void *)main;
+	unsigned char *opcodes = (unsigned char *)main_addr;
 	for (i = 0; i < num_bytes; i++)
 	{
 		printf("%02x ", opcodes[i]);
