@@ -1,5 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
+
+void print_opcodes(int num_bytes);
 /**
  * main - entry point
  * @argc: argument count
@@ -8,8 +10,7 @@
  */
 int main(int argc, char *argv[])
 {
-	int ink, num_bytes;
-	unsigned char *opcode_ptr;
+	int num_bytes;
 
 	if (argc != 2)
 	{
@@ -22,11 +23,19 @@ int main(int argc, char *argv[])
 		printf("Error\n");
 		return (2);
 	}
+	print_opcodes(num_bytes);
+	return (0);
+}
+
+void print_opcodes(int num_bytes)
+{
+	unsigned char *opcode_ptr;
+	int ink;
+
 	opcode_ptr = (unsigned char *)main;
 	for (ink = 0; ink < num_bytes; ink++)
 	{
-		printf("%02hhx ", opcode_ptr[ink]);
+		printf("%02x ", opcode_ptr[ink]);
 	}
 	printf("\n");
-	return (0);
 }
