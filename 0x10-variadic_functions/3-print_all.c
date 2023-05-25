@@ -14,6 +14,7 @@ void print_all(const char * const format, ...)
 	char c;
 	char *s;
 	float f;
+	int new;
 
 	va_start(ap, format);
 	while (format[i] != '\0')
@@ -21,22 +22,32 @@ void print_all(const char * const format, ...)
 		if (format[i] == 'c')
 		{
 			c = (char)va_arg(ap, int);
-			printf("%c, ", c);
+			printf("%c", c);
 		}
 		else if (format[i] == 'i')
 		{
 			integer = va_arg(ap, int);
-			printf("%d, ", integer);
+			printf("%d", integer);
 		}
 		else if (format[i] == 'f')
 		{
 			f = (float)va_arg(ap, double);
-			printf("%f, ", f);
+			printf("%f", f);
 		}
 		else if (format[i] == 's')
 		{
 			s = va_arg(ap, char*);
-			printf("%s, ", (s != NULL) ? s : "(nil)");
+			if (s == NULL)
+			{
+				printf("(nil)");
+			}
+			printf("%s", s);
+		}
+		new = i + 1;
+		while (format[new] != '\0' && (format[i] == 'c' || format[i] == 'i' || format[i] == 'f' || format[i] == 's'))
+		{
+			printf(", ");
+			break;
 		}
 		i++;
 	}
