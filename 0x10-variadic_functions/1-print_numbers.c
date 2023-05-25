@@ -11,10 +11,10 @@ void print_numbers(const char *separator, const unsigned int n, ...)
 {
 	va_list ap;
 	unsigned int ink;
-	int num;
+	int num = 0;
 
 	va_start(ap, n);
-	while (ink = 0; ink < n; ink++)
+	for (ink = 0; ink < n; ink++)
 	{
 		num = va_arg(ap, int);
 		printf("%d ", num);
