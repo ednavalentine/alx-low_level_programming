@@ -15,11 +15,9 @@ void print_strings(const char *separator, const unsigned int n, ...)
 	const char *str;
 
 	va_start(ap, n);
-	if (separator == NULL)
-		return;
 	for (ink = 0; ink < n; ink++)
 	{
-		str = va_arg(ap, const char *);
+		str = va_arg(ap, const char*);
 		if (str == NULL)
 			printf("(nil)");
 		else

@@ -12,17 +12,14 @@ void print_numbers(const char *separator, const unsigned int n, ...)
 {
 	va_list ap;
 	unsigned int ink;
-	int num, print = 0;
+	int num;
 
 	va_start(ap, n);
-	if (separator == NULL)
-		return;
 	for (ink = 0; ink < n; ink++)
 	{
-		num = va_arg(ap, unsigned int);
-		print += num;
+		num = va_arg(ap, int);
 		printf("%d ", num);
-		if (ink < n - 1)
+		if (ink < n - 1 && separator != NULL)
 		{
 			printf("%s", separator);
 		}
