@@ -40,6 +40,6 @@ void print_all(const char * const format, ...)
 			printf(", ");
 		i++;
 	}
-	va_end(ap);
 	printf("\n");
+	va_end(ap);
 }
