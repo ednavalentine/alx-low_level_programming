@@ -13,17 +13,15 @@ size_t print_list(const list_t *h)
 
 	while (ink != NULL)
 	{
-		printf("[%u} ", ink->len);
-		if (ink->str != NULL)
+		if (ink->str == NULL)
 		{
-			printf("%s", ink->str);
+			printf("[0] (nil)\n");
+			jum++;
 		}
 		else
 		{
-			printf("(nil)");
+			printf("[%lu] %s\n", jum++, ink->str);
 		}
-		printf("\n");
-		jum++;
 		ink = ink->next;
 	}
 	return (jum);
