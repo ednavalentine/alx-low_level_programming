@@ -1,6 +1,8 @@
 #include "lists.h"
 #include <stdio.h>
 #include <stddef.h>
+#include <string.h>
+
 /**
  * print_list - prints a list
  * @h: constant list variable
@@ -13,15 +15,15 @@ size_t print_list(const list_t *h)
 
 	while (ink != NULL)
 	{
-		if (ink->str == NULL)
+		if (ink->str != NULL)
 		{
-			printf("[0] (nil)\n");
-			jum++;
+			printf("[%lu] %s\n", strlen(ink->str), ink->str);
 		}
 		else
 		{
-			printf("[%lu] %s\n", jum++, ink->str);
+			printf("[0] (nil)\n");
 		}
+		jum++;
 		ink = ink->next;
 	}
 	return (jum);
