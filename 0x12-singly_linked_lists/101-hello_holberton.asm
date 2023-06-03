@@ -1,7 +1,6 @@
 section .data
 	hello db "Hello, Holberton", 0
-	format db "%s", 0
-	newline db "\n", 10
+	format db "%s", 10, 0
 
 section .text
 	extern printf
@@ -12,10 +11,11 @@ main:
 
 	mov rdi, format
 	mov rsi, hello
-	xor rax, rax
+	xor eax, eax
 	call printf
 
 	add rsp, 8
 
-	xor eax, eax
-	ret
+	mov eax, 0x60
+	xor edi, edi
+	syscall
