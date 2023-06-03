@@ -1,17 +1,21 @@
 section .data
-	message db 'Hello, Holberton', 0
+	hello db "Hello, Holberton", 0
+	format db "%s", 0
+	newline db "\n", 10
 
 section .text
 	extern printf
 
 global main
 main:
-	; Prepare arguments for printf function call
-	mov rdi, message
-	xor rax, rax  ; Clear rax register to indicate no floating-point arguments
+	sub rsp, 8
+
+	mov rdi, format
+	mov rsi, hello
+	xor rax, rax
 	call printf
 
-	; Exit the program
-	mov eax, 60  ; System call number for exit
-	xor edi, edi ; Exit status code (0)
-	syscall
+	add rsp, 8
+
+	xor eax, eax
+	ret
