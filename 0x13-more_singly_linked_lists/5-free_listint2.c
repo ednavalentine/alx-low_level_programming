@@ -9,11 +9,12 @@ void free_listint2(listint_t **head)
 {
 	listint_t *jum;
 
+	if (head == NULL)
+		return;
 	while (*head != NULL)
 	{
 		jum = *head;
 		*head = (*head)->next;
 		free(jum);
 	}
-	*head = NULL;
 }
