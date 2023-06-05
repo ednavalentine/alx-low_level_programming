@@ -12,25 +12,27 @@ int delete_nodeint_at_index(listint_t **head, unsigned int index)
 	listint_t *mode;
 	unsigned int jum = 0;
 
-	if (head == NULL || *head == NULL)
+	if (*head == NULL)
 		return (-1);
+	ink = *head;
+	mode = NULL;
 	if (index == 0)
 	{
-		*head = (*head)->next;
-		ink = *head;
+		*head = ink->next;
 		free(ink);
 		return (1);
 	}
-	mode = NULL;
-	while (ink != NULL && jum < index)
+	while (ink != NULL)
 	{
+		if (jum == index)
+		{
+			mode->next = ink->next;
+			free(ink);
+			return (1);
+		}
 		mode = ink;
 		ink = ink->next;
 		jum++;
 	}
-	if (ink == NULL)
-		return (-1);
-	mode->next = ink->next;
-	free(ink);
 	return (-1);
 }
