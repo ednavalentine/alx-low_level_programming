@@ -2,23 +2,28 @@
 #include <stdlib.h>
 #include <stdio.h>
 /**
- * detect_loop - detect and return the node where the loop starts
- * @head: parameter to be used
- * Return: 0
+ * _loop - reallocates memory of arrays
+ * @list: list to be reallocated
+ * @sizer: new size of list
+ * @new: new node to be added to the list
+ * Return: pointer to list
  */
-const listint_t *detect_loop(const listint_t *head)
+const listint_t **_loop(const listint_t **list, size_t sizer, const listint_t *now)
 {
-	const listint_t *tort = head;
-	const listint_t *hare = head;
+	const listint_t **tort;
+	size_t ink;
 
-	while (hare && hare->next)
+	tort = malloc(sizer * sizeof(listint_t *));
+	if (tort == NULL)
 	{
-		tort = tort->next;
-		hare = hare->next->next;
-		if (tort == hare)
-			return (tort);
+		free(list);
+		exit(98);
 	}
-	return (NULL);
+	for (ink = 0; ink < sizer - 1; ink++)
+		tort[ink] = list[ink];
+	tort[ink] = now;
+	free(list);
+	return (tort);
 }
 
 /**
@@ -28,31 +33,25 @@ const listint_t *detect_loop(const listint_t *head)
  */
 size_t print_listint_safe(const listint_t *head)
 {
-	const listint_t *ink_start;
-	const listint_t *mode;
-	size_t jum = 0;
+	size_t inker, jum = 0;
+	const listint_t **ink = NULL;
 
-	ink_start = detect_loop(head);
-	mode = head;
-	while (head)
+	while (head != NULL)
 	{
-		printf("[%p] %d\n", (void *)head, head->n);
-		jum++;
-		if (head == ink_start)
+		for (inker = 0; inker < jum; inker++)
 		{
-			printf("-> [%p] %d\n", (void *)head, head->n);
-			if (ink_start != NULL)
+			if (head == ink[inker])
 			{
-				do
-				{
-					mode = mode->next;
-					printf("[%p] %d\n", (void *)mode, mode->n);
-					jum++;
-				} while (mode != ink_start);
+				printf("-> [%p] %d\n", (void *)head, head->n);
+				free(ink);
+				return (jum);
 			}
-			exit(98);
 		}
+		jum++;
+		ink = _loop(ink, jum, head);
+		printf("[%p] %d\n", (void *)head, head->n);
 		head = head->next;
 	}
+	free(ink);
 	return (jum);
 }
