@@ -8,11 +8,10 @@
  */
 size_t print_listint_safe(const listint_t *head)
 {
-	const listint_t *ink;
+	const listint_t *ink = head;
 	size_t jum = 0;
 
-	ink = head;
-	while (ink)
+	while (ink != NULL)
 	{
 		printf("[%p] %d\n", (void *)ink, ink->n);
 		jum++;
