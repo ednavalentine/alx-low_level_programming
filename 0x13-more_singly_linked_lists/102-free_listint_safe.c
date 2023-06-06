@@ -10,20 +10,30 @@ size_t free_listint_safe(listint_t **h)
 {
 	size_t jum = 0;
 	listint_t *ink;
-	listint_t *next;
+	listint_t *mode;
+	int node;
 
 	if (h == NULL || *h == NULL)
-		return (jum);
+		return (0);
 	ink = *h;
+	jum = 0;
 	while (ink != NULL)
 	{
-		next = ink->next;
-		printf("[%p] %d\n", (void *)ink, ink->n);
-		free(ink);
-		jum++;
-		ink = next;
+		node = ink - ink->next;
+		if (node > 0)
+		{
+			mode = ink->next;
+			free(ink);
+			ink = mode;
+			jum++;
+		}
+		else
+		{
+			free(ink);
+			jum++;
+			break;
+		}
 	}
-	printf("(nil), (nil)\n");
 	*h = NULL;
 	return (jum);
 }
