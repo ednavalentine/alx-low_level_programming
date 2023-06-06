@@ -8,19 +8,21 @@
  */
 size_t print_listint_safe(const listint_t *head)
 {
-	const listint_t *ink = head;
+	long int ink;
 	size_t jum = 0;
 
-	while (ink != NULL)
+	while (head)
 	{
-		printf("[%p] %d\n", (void *)ink, ink->n);
+		ink = head - head->next;
 		jum++;
-		if (ink <= ink->next)
+		printf("[%p] %d\n", (void *)head, head->n);
+		if (ink > 0)
+			head = head->next;
+		else
 		{
-			printf("-> [%p] %d\n", (void *)ink->next, ink->next->n);
+			printf("-> [%p] %d\n", (void *)head->next, head->next->n);
 			exit(98);
 		}
-		ink = ink->next;
 	}
 	return (jum);
 }
