@@ -14,8 +14,7 @@ listint_t *find_listint_loop(listint_t *head)
 	{
 		return (NULL);
 	}
-	do
-	{
+	do {
 		tort = tort->next;
 		hare = hare->next->next;
 		if (hare == NULL || hare->next == NULL)
