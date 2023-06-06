@@ -13,7 +13,6 @@ listint_t *reverse_listint(listint_t **head)
 
 	ink = NULL;
 	mode = *head;
-	jum = NULL;
 	while (mode != NULL)
 	{
 		jum = mode->next;
@@ -21,6 +20,6 @@ listint_t *reverse_listint(listint_t **head)
 		ink = mode;
 		mode = jum;
 	}
-	*head = jum;
+	*head = ink;
 	return (*head);
 }
