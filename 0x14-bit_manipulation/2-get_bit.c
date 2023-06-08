@@ -19,5 +19,5 @@ int get_bit(unsigned long int n, unsigned int index)
 	}
 	ink = 1UL << index;
 	cat = n & ink;
-	return (cat != 0) ? 1 : 0;
+	return ((cat != 0) ? 1 : 0);
 }
