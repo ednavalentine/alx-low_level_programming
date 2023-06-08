@@ -9,7 +9,7 @@ int get_endianness(void)
 	unsigned int ink = 1;
 	char *mode;
 
-	mode = (char*) &ink;
+	mode = (char *) &ink;
 	if (*mode)
 		return (1);
 	else
