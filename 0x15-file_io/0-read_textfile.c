@@ -27,6 +27,7 @@ ssize_t read_textfile(const char *filename, size_t letters)
 	cat = fopen(filename, "r");
 	if (cat == NULL)
 	{
+		free(mode);
 		return (0);
 	}
 	ink_read = fread(mode, sizeof(char), letters, cat);
@@ -36,13 +37,12 @@ ssize_t read_textfile(const char *filename, size_t letters)
 		free(mode);
 		return (0);
 	}
-	mode[ink_read] = '\0';
 	ink_written = fwrite(mode, sizeof(char), ink_read, stdout);
-	fclose(cat);
-	free(mode);
 	if (ink_written != ink_read)
 	{
 		return (0);
 	}
+	fclose(cat);
+	free(mode);
 	return (ink_written);
 }
