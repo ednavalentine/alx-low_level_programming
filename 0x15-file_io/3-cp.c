@@ -86,7 +86,7 @@ int main(int argc, char *argv[])
 	}
 	ink = argv[1];
 	inker = argv[2];
-	if (stat(inker, &st) == 0)
+	if (stat(inker, &st) != -1)
 	{
 		if (truncate(inker, 0) == -1)
 		{
