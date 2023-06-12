@@ -21,7 +21,7 @@ void print_error_and_exit(const char *error_message, int exit_code)
 }
 /**
  * copy_file - copys a file
- * @fie_from: origin of the file
+ * @file_from: origin of the file
  * @file_to: destination of the file
  * Return: void
  */
@@ -88,7 +88,7 @@ int main(int argc, char *argv[])
 	inker = argv[2];
 	if (stat(inker, &st) == 0)
 	{
-		if(truncate(inker, 0) == -1)
+		if (truncate(inker, 0) == -1)
 		{
 			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", inker);
 			exit(99);
