@@ -2,6 +2,10 @@
 #include <stdio.h>
 #include <stddef.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
 /**
  * read_textfile - reads a text file
  * @filename: pointer to file name
@@ -10,8 +14,8 @@
  */
 ssize_t read_textfile(const char *filename, size_t letters)
 {
-	char *mode;
-	FILE *cat;
+	int mode;
+	char *ink;
 	ssize_t ink_read;
 	ssize_t ink_written;
 
@@ -19,30 +23,26 @@ ssize_t read_textfile(const char *filename, size_t letters)
 	{
 		return (0);
 	}
-	mode = malloc((letters + 1) * sizeof(char));
-	if (mode == NULL)
+	mode = open(filename, O_RDONLY);
+	if (mode == -1)
+		return (0);
+	ink = malloc(sizeof(char) * letters);
+	if (ink == NULL)
 	{
+		close(mode);
 		return (0);
 	}
-	cat = fopen(filename, "r");
-	if (cat == NULL)
+	ink_read = read(mode, ink, letters);
+	close(mode);
+	if (ink_read == -1)
 	{
-		free(mode);
+		free(ink);
 		return (0);
 	}
-	ink_read = fread(mode, sizeof(char), letters, cat);
-	if (ink_read <= 0)
-	{
-		fclose(cat);
-		free(mode);
-		return (0);
-	}
-	ink_written = fwrite(mode, sizeof(char), ink_read, stdout);
+	ink_written = write(STDOUT_FILENO, ink, ink_read);
 	if (ink_written != ink_read)
 	{
 		return (0);
 	}
-	fclose(cat);
-	free(mode);
 	return (ink_written);
 }
