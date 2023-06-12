@@ -1,6 +1,9 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdint.h>
 
 #define ELF_M "\x7F\x45\x4C\x46"
 #define ELF_MAGIC 4
@@ -62,7 +65,7 @@ void display_data(const Elf32_Ehdr *header)
 	printf("Data: ");
 	switch (header->data)
 	{
-		case 1:
+		case 1U:
 			printf("2's complement, little endian\n");
 			break;
 		case 2:
@@ -124,7 +127,7 @@ void display_elf_header(const char *filename)
 		dprintf(STDERR_FILENO, "Failed to read ELF header: %s\n", filename);
 		exit(98);
 	}
-	if (memcmp(header.ident, ELF_M, ELF_MAGIC) != 0)
+	if (memcmp(header.ident, ELF_M, ELF_MAGIC) != 0U)
 	{
 		dprintf(STDERR_FILENO, "Invalid ELF file: %s\n", filename);
 		exit(98);
@@ -210,7 +213,10 @@ int main(int argc, char *argv[])
 	const char *ink_name;
 
 	if (argc != 2)
+	{
 		dprintf(STDERR_FILENO, "Usage: %s elf_filename\n", argv[0]);
+		return (1);
+	}
 	ink_name = argv[1];
 	display_elf_header(ink_name);
 	return (0);
