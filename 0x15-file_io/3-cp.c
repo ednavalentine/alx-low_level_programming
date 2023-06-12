@@ -9,14 +9,64 @@
 #define BUFF 1024
 
 /**
- * print_error - prints an error
- * @message: error message
+ * print_error_and_exit - prints an error and exits
+ * @error_message: error message
+ * @exit_code: code exit
  * Return: void
  */
-void print_error(const char *message)
+void print_error_and_exit(const char *error_message, int exit_code)
 {
-	dprintf(STDERR_FILENO, "%s\n", message);
-	exit(1);
+	dprintf(STDERR_FILENO, "%s\n", error_message);
+	exit(exit_code);
+}
+/**
+ * copy_file - copys a file
+ * @fie_from: origin of the file
+ * @file_to: destination of the file
+ * Return: void
+ */
+void copy_file(const char *file_from, const char *file_to)
+{
+	int org_file, dest_file;
+	ssize_t mode_read, mode_written;
+	char ink[BUFF];
+
+	org_file = open(file_from, O_RDONLY);
+	if (org_file == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", file_from);
+		exit(98);
+	}
+	dest_file = open(file_to, O_WRONLY | O_CREAT | O_TRUNC, 0664);
+	if (dest_file == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file_to);
+		exit(99);
+	}
+	while ((mode_read = read(org_file, ink, BUFF)) > 0)
+	{
+		mode_written = write(dest_file, ink, mode_read);
+		if (mode_written == -1)
+		{
+			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file_to);
+			exit(99);
+		}
+		if (mode_read == -1)
+		{
+			dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", file_from);
+			exit(98);
+		}
+	}
+	if (close(org_file) == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", org_file);
+		exit(100);
+	}
+	if (close(dest_file) == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", dest_file);
+		exit(100);
+	}
 }
 /**
  * main - main code
@@ -26,62 +76,29 @@ void print_error(const char *message)
  */
 int main(int argc, char *argv[])
 {
-	const char *ink_from;
-	const char *ink_to;
-	int mode_from;
-	int mode_to;
-	char buffer[BUFF];
-	ssize_t ink_read, ink_write;
+	const char *ink;
+	const char *inker;
+	struct stat st;
 
 	if (argc != 3)
 	{
-		dprintf(STDERR_FILENO, "Usage: cp ink_from ink_to\n");
-		exit(97);
+		print_error_and_exit("Usage: cp file_from file_to", 97);
 	}
-	ink_from = argv[1];
-	ink_to = argv[2];
-	mode_from = open(ink_from, O_RDONLY);
-	if (mode_from == -1)
+	ink = argv[1];
+	inker = argv[2];
+	if (stat(inker, &st) == 0)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't read from file\n");
-		exit(98);
-	}
-	mode_to = open(ink_to, O_WRONLY | O_CREAT | O_TRUNC,
-			S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
-	if (mode_to == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't write to file\n");
-		exit(99);
-	}
-	while ((ink_read = read(mode_from, buffer, BUFF)) > 0)
-	{
-		ink_write = write(mode_to, buffer, ink_read);
-		if (ink_write == -1)
+		if(truncate(inker, 0) == -1)
 		{
-			dprintf(STDERR_FILENO, "Error: Can't write to file\n");
+			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", inker);
 			exit(99);
 		}
 	}
-	if (ink_read == -1)
+	copy_file(ink, inker);
+	if (chmod(inker, 0664) == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't read to file\n");
+		dprintf(STDERR_FILENO, "Error: Can't set permissions for %s\n", inker);
 		exit(99);
-	}
-	if (close(mode_from) == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd\n");
-		exit(100);
-	}
-	if (close(mode_to) == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd\n");
-		exit(100);
-	}
-	if (chmod(ink_to, S_IRUSR | S_IWUSR
-			| S_IRGRP | S_IWGRP | S_IROTH) == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't set file permissions\n");
-		exit(100);
 	}
 	return (0);
 }
