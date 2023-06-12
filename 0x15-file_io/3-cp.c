@@ -49,7 +49,7 @@ int main(int argc, char *argv[])
 	mode_from = open(ink_from, O_RDONLY);
 	if (mode_from == -1)
 		exit_with_error("Error: Can't read from file", 98);
-	mode_to = open(ink_to, O_WRONLY | O_CREAT | O_TRUNC, 
+	mode_to = open(ink_to, O_WRONLY | O_CREAT | O_TRUNC,
 			S_IRUSR | S_IWUSR | S_IRGRP | S_IWGRP | S_IROTH);
 	if (mode_to == -1)
 		exit_with_error("Error: Can't write to file", 99);
@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
 		exit_with_error("Error: Can't close fd", 100);
 	if (close(mode_to) == -1)
 		exit_with_error("Error: Can't close fd", 100);
-	if (chmod(ink_to, S_IRUSR | S_IWUSR 
+	if (chmod(ink_to, S_IRUSR | S_IWUSR
 			| S_IRGRP | S_IWGRP | S_IROTH) == -1)
 		exit_with_error("Error: Can't set file permissions", 100);
 	return (0);
