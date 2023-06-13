@@ -12,10 +12,10 @@ void print_magic(unsigned char *e_ident);
 void print_class(unsigned char *e_ident);
 void print_data(unsigned char *e_ident);
 void print_version(unsigned char *e_ident);
-void print_type(unsigned char *e_ident, unsigned int e_type);
-void print_entry_point(unsigned char *e_ident, unsigned long int e_entry);
 void print_osabi(unsigned char *e_ident);
 void print_abi_version(unsigned char *e_ident);
+void print_type(unsigned char *e_ident, unsigned int e_type);
+void print_entry_point(unsigned char *e_ident, unsigned long int e_entry);
 void elf_closer(int elf);
 
 /**
@@ -52,7 +52,7 @@ void print_magic(unsigned char *e_ident)
 	for (ink = 0; ink < EI_NIDENT; ink++)
 	{
 		printf("%02X ", e_ident[ink]);
-		if (ink == EI_NIDENT -1)
+		if (ink == EI_NIDENT - 1)
 			printf("\n");
 		else
 			printf(" ");
@@ -126,59 +126,6 @@ void print_version(unsigned char *e_ident)
 	}
 }
 /**
- * print_type - diplays file types
- * @e_ident: header of the file
- * @e_type: unsigned int to be used
- * Return: void
- */
-void print_type(unsigned char *e_ident, unsigned int e_type)
-{
-	if (e_ident[EI_DATA] == ELFDATA2MSB)
-		e_type >>= 8;
-	printf("  Type:                               ");
-	switch (e_type)
-	{
-		case ET_NONE:
-			printf("NONE (None)\n");
-			break;
-		case ET_REL:
-			printf("REL (Relocatable file)\n");
-			break;
-		case ET_EXEC:
-			printf("EXEC (Executable file)\n");
-			break;
-		case ET_DYN:
-			printf("DYN (Shared object file)\n");
-			break;
-		case ET_CORE:
-			printf("CORE (Core file)\n");
-			break;
-		default:
-			printf("Unknown: %x>\n", e_type);
-			break;
-	}
-}
-/**
- * print_entry_point - entry point of elf header
- * @e_ident: header to be used
- * @e_entry: unsigned long int to be used
- * Return: void
- */
-void print_entry_point(unsigned char *e_ident, unsigned long int e_entry)
-{
-	printf("  Entry point address:                ");
-	if (e_ident[EI_DATA] == ELFDATA2MSB)
-	{
-		e_entry = ((e_entry << 8) & 0xFF00FF00) |
-			((e_entry >> 8) & 0xFF00FF);
-		e_entry = (e_entry << 16) | (e_entry >> 16);
-	}
-	if (e_ident[EI_CLASS] == ELFCLASS32)
-		printf("%#x\n", (unsigned int)e_entry);
-	else
-		printf("%#lx\n", e_entry);
-}
-/**
  * print_osabi - displays abi
  * @e_ident: the item to be displayed
  * Return: abi
@@ -232,6 +179,59 @@ void print_abi_version(unsigned char *e_ident)
 {
 	printf("  ABI Version:                        %d\n",
 			e_ident[EI_ABIVERSION]);
+}
+/**
+ * print_type - diplays file types
+ * @e_ident: header of the file
+ * @e_type: unsigned int to be used
+ * Return: void
+ */
+void print_type(unsigned char *e_ident, unsigned int e_type)
+{
+	if (e_ident[EI_DATA] == ELFDATA2MSB)
+		e_type >>= 8;
+	printf("  Type:                               ");
+	switch (e_type)
+	{
+		case ET_NONE:
+			printf("NONE (None)\n");
+			break;
+		case ET_REL:
+			printf("REL (Relocatable file)\n");
+			break;
+		case ET_EXEC:
+			printf("EXEC (Executable file)\n");
+			break;
+		case ET_DYN:
+			printf("DYN (Shared object file)\n");
+			break;
+		case ET_CORE:
+			printf("CORE (Core file)\n");
+			break;
+		default:
+			printf("Unknown: %x>\n", e_type);
+			break;
+	}
+}
+/**
+ * print_entry_point - entry point of elf header
+ * @e_ident: header to be used
+ * @e_entry: unsigned long int to be used
+ * Return: void
+ */
+void print_entry_point(unsigned char *e_ident, unsigned long int e_entry)
+{
+	printf("  Entry point address:                ");
+	if (e_ident[EI_DATA] == ELFDATA2MSB)
+	{
+		e_entry = ((e_entry << 8) & 0xFF00FF00) |
+			((e_entry >> 8) & 0xFF00FF);
+		e_entry = (e_entry << 16) | (e_entry >> 16);
+	}
+	if (e_ident[EI_CLASS] == ELFCLASS32)
+		printf("%#x\n", (unsigned int)e_entry);
+	else
+		printf("%#lx\n", e_entry);
 }
 /**
  * elf_closer - close a elf file
@@ -289,7 +289,7 @@ int main(int __attribute__((__unused__)) argc, char *argv[])
 	print_abi_version(head->e_ident);
 	print_type((unsigned char *)head, head->e_type);
 	print_entry_point((unsigned char *)head, head->e_entry);
-	
+
 	free(head);
 	elf_closer(ink);
 	return (0);
