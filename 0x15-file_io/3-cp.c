@@ -41,8 +41,8 @@ void copy_file(const char *file_from, const char *file_to)
 	dest_file = open(file_to, O_WRONLY | O_CREAT | O_TRUNC, 0664);
 	if (dest_file == -1)
 	{
-			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file_to);
-			exit(99);
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file_to);
+		exit(99);
 	}
 	while ((mode_read = read(org_file, ink, BUFF)) > 0)
 	{
