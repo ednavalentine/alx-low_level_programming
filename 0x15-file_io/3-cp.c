@@ -5,6 +5,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <string.h>
+#include <errno.h>
 
 #define BUFF 1024
 
@@ -40,7 +41,14 @@ void copy_file(const char *file_from, const char *file_to)
 	dest_file = open(file_to, O_WRONLY | O_CREAT | O_TRUNC, 0664);
 	if (dest_file == -1)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file_to);
+		if (errno == EACCES)
+		{
+			dprintf(STDERR_FILENO, "Error: Permission denied to write %s\n", file_to);
+		}
+		else
+		{
+			dprintf(STDERR_FILENO, "Error: Can't write to %s\n", file_to);
+		}
 		exit(99);
 	}
 	while ((mode_read = read(org_file, ink, BUFF)) > 0)
