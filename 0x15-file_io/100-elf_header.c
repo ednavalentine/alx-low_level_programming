@@ -4,6 +4,8 @@
 #include <stdio.h>
 #include <elf.h>
 #include <string.h>
+#include <sys/stat.h>
+#include <sys/types.h>
 
 #define BUFF 4096
 
