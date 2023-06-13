@@ -5,7 +5,6 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <string.h>
-#include <errno.h>
 
 #define BUFF 1024
 
@@ -96,10 +95,5 @@ int main(int argc, char *argv[])
 		}
 	}
 	copy_file(ink, inker);
-	if (chmod(inker, 0664) == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't set permissions for %s\n", inker);
-		exit(99);
-	}
 	return (0);
 }
